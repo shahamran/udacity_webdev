@@ -161,7 +161,7 @@ def valid_pw(name, pw, h):
 
 
 def create_user_cookie(response, user_id):
-    cookie_val = make_secure_val(user_id)
+    cookie_val = make_secure_val(user_id) if user_id else ""
     response.headers.add_header(
         'Set-Cookie', '%s=%s; Path=/' % (COOKIE_NAME, cookie_val)
     )
@@ -244,6 +244,12 @@ class LoginHandler(Handler):
         self.redirect('/blog/welcome')
 
 
+class LogoutPage(Handler):
+    def get(self):
+        create_user_cookie(self.response, None)
+        self.redirect('/blog/signup')
+
+
 class WelcomePage(Handler):
     def get(self):
         cookie_val = self.request.cookies.get(COOKIE_NAME)
@@ -263,5 +269,6 @@ app = webapp2.WSGIApplication([
     (r'/blog/(\d+)/?', PostPage),
     (r'/blog/signup/?', SignupHandler),
     (r'/blog/welcome/?', WelcomePage),
-    (r'/blog/login/?', LoginHandler)
+    (r'/blog/login/?', LoginHandler),
+    (r'/blog/logout/?', LogoutPage)
 ], debug=True)
