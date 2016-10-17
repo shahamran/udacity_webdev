@@ -100,6 +100,7 @@ class PostPage(Handler):
 
 
 # ===== User accounts =====
+
 class User(db.Model):
     """A user in the blog"""
     name = db.StringProperty(required=True)
@@ -159,11 +160,17 @@ def valid_pw(name, pw, h):
     return h == my_h
 
 
-def create_new_user(name, password, email):
+def create_user_cookie(response, user_id):
+    cookie_val = make_secure_val(user_id)
+    response.headers.add_header(
+        'Set-Cookie', '%s=%s; Path=/' % (COOKIE_NAME, cookie_val)
+    )
+
+
+def create_new_user(response, name, password, email):
     password_hash = make_pw_hash(name, password)
     user = User(name=name, password_hash=password_hash, email=email)
-    user_id = user.put().id()
-    return make_secure_val(user_id)
+    create_user_cookie(response, user.put().id())
 
 
 class SignupHandler(Handler):
@@ -203,11 +210,38 @@ class SignupHandler(Handler):
         if has_error:
             self.render('signup.html', **params)
         else:
-            cookie_val = create_new_user(username, password, email)
-            self.response.headers.add_header(
-                'Set-Cookie', '%s=%s' % (COOKIE_NAME, cookie_val)
-            )
+            create_new_user(self.response, username, password, email)
             self.redirect('/blog/welcome')
+
+
+class LoginHandler(Handler):
+    def render_error(self, username=''):
+        self.render('login.html',
+                    username=username,
+                    error='Invalid login.')
+
+    def get(self):
+        self.render("login.html")
+
+    def post(self):
+        username = self.request.get('username')
+        password = self.request.get('password')
+
+        if not valid_username(username):
+            self.render_error(username)
+            return
+
+        user = User.gql("WHERE name = '%s'" % username).get()
+        if not user:
+            self.render_error(username)
+            return
+
+        if not valid_pw(username, password, user.password_hash):
+            self.render_error(username)
+            return
+
+        create_user_cookie(self.response, user.key().id())
+        self.redirect('/blog/welcome')
 
 
 class WelcomePage(Handler):
@@ -228,5 +262,6 @@ app = webapp2.WSGIApplication([
     (r'/blog/newpost/?', NewPost),
     (r'/blog/(\d+)/?', PostPage),
     (r'/blog/signup/?', SignupHandler),
-    (r'/blog/welcome/?', WelcomePage)
+    (r'/blog/welcome/?', WelcomePage),
+    (r'/blog/login/?', LoginHandler)
 ], debug=True)
