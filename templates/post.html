@@ -1,14 +1,15 @@
-{% extends "base.html" %}
-{% block title %}{{post.subject}}{% endblock %}
-{% block content %}
 <div class="post">
-  <div>
-    <span class="post-subject">{{post.subject}}</span>
-    <span class="post-date">{{post.created.date()}}</span>
+  <div class="post-heading">
+    <div class="post-title">
+      {{p.subject}}
+    </div>
+
+    <div class="post-date">
+      {{p.created.strftime("%b %d, %Y")}}
+    </div>
   </div>
 
-  <hr>
-
-  <div class="post-body">{{post.content}}</div>
+  <div class="post-content">
+    {{p._render_text | safe}}
+  </div>
 </div>
-{% endblock %}
