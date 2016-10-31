@@ -129,7 +129,7 @@ class BlogFront(Handler):
 class JSONHandler(Handler):
     def get(self, post_id=None):
         self.response.headers.add_header('Content-Type',
-                                         'applictaion/json; charset=UTF-8')
+                                         'application/json; charset=UTF-8')
         self.done(post_id)
 
     def done(self, post_id):
