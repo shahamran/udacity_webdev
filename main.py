@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 import os
 import re
-import string
+from string import ascii_letters
 import random
+import hmac
 import hashlib
+import json
 
 import webapp2
 import jinja2
@@ -14,18 +16,59 @@ template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir),
                                autoescape=True)
 
+SECRET = '41oSxXU0kuHuRugauSYz'
+DELIM = '|'
+COOKIE_NAME = 'user_id'
+
 
 # ===== Blog Stuff =====
+
+def make_secure_val(val):
+    return '%s%s%s' % (val, DELIM, hmac.new(SECRET, str(val)).hexdigest())
+
+
+def check_secure_val(secure_val):
+    val = secure_val.split(DELIM)
+    if val:
+        val = val[0]
+    if make_secure_val(val) == secure_val:
+        return val
+
+
+def make_salt(length=5):
+    return ''.join(random.choice(ascii_letters) for x in range(length))
+
+
+def make_pw_hash(name, pw, salt=None):
+    if not salt:
+        salt = make_salt()
+    h = hashlib.sha256(name + pw + salt).hexdigest()
+    return '%s%s%s' % (h, DELIM, salt)
+
+
+def valid_pw(name, pw, h):
+    salt = h.split(DELIM)[-1]
+    my_h = make_pw_hash(name, pw, salt)
+    return h == my_h
+
 
 class Post(db.Model):
     """The blog-posts database for the datastore"""
     subject = db.StringProperty(required=True)
     content = db.TextProperty(required=True)
     created = db.DateTimeProperty(auto_now_add=True)
+    created_by = db.StringProperty()
 
     def render(self):
         self._render_text = self.content.replace('\n', '<br>')
         return render_str("post.html", p=self)
+
+    def create_dict(self):
+        return dict(subject=self.subject, content=self.content,
+                    created=self.created.strftime('%a %b %d %H:%M:%S %Y'))
+
+    def create_json(self):
+        return json.dumps(self.create_dict())
 
 
 def render_str(template, **kw):
@@ -49,10 +92,27 @@ class Handler(webapp2.RequestHandler):
     def render(self, template, **kw):
         self.write(self.render_str(template, **kw))
 
+    def set_secure_cookie(self, name, val):
+        cookie_val = make_secure_val(val)
+        self.response.headers.add_header(
+            'Set-Cookie',
+            '%s=%s; Path=/' % (name, cookie_val))
 
-def render_post(response, post):
-    response.out.write('<b>' + post.subject + '</b><br>')
-    response.out.write(post.content)
+    def read_secure_cookie(self, name):
+        cookie_val = self.request.cookies.get(name)
+        return cookie_val and check_secure_val(cookie_val)
+
+    def login(self, user):
+        self.set_secure_cookie(COOKIE_NAME, user.key().id())
+
+    def logout(self):
+        self.response.headers.add_header('Set-Cookie',
+                                         COOKIE_NAME + '=; Path=/')
+
+    def initialize(self, *a, **kw):
+        webapp2.RequestHandler.initialize(self, *a, **kw)
+        uid = self.read_secure_cookie(COOKIE_NAME)
+        self.user = uid and User.by_id(int(uid))
 
 
 class BlogFront(Handler):
@@ -62,10 +122,34 @@ class BlogFront(Handler):
     """
 
     def get(self):
-        posts = db.GqlQuery(
-            "SELECT * FROM Post ORDER BY created DESC LIMIT 10"
-        )
+        posts = Post.all().order('-created').fetch(limit=10)
         self.render("front.html", posts=posts)
+
+
+class JSONHandler(Handler):
+    def get(self, post_id=None):
+        self.response.headers.add_header('Content-Type',
+                                         'applictaion/json; charset=UTF-8')
+        self.done(post_id)
+
+    def done(self, post_id):
+        raise NotImplementedError
+
+
+class BlogJSON(JSONHandler):
+    def done(self, post_id):
+        posts = Post.all().order('-created').fetch(limit=10)
+        posts_dicts = [post.create_dict() for post in posts]
+        self.write(json.dumps(posts_dicts))
+
+
+class PostJSON(JSONHandler):
+    def done(self, post_id):
+        post = Post.get_by_id(int(post_id))
+        if not post:
+            self.error(404)
+        else:
+            self.write(post.create_json())
 
 
 class NewPost(Handler):
@@ -75,9 +159,10 @@ class NewPost(Handler):
     def post(self):
         subject = self.request.get('subject')
         content = self.request.get('content')
+        user = self.user.name if self.user else ''
 
         if subject and content:
-            p = Post(subject=subject, content=content)
+            p = Post(subject=subject, content=content, created_by=user)
             post_id = p.put().id()
             self.redirect("/blog/%d" % post_id)
         else:
@@ -108,13 +193,29 @@ class User(db.Model):
     email = db.StringProperty()
     created = db.DateTimeProperty(auto_now_add=True)
 
+    @classmethod
+    def by_id(cls, uid):
+        return cls.get_by_id(uid)
+
+    @classmethod
+    def by_name(cls, name):
+        return cls.all().filter('name =', name).get()
+
+    @classmethod
+    def register(cls, name, pw, email=None):
+        pw_hash = make_pw_hash(name, pw)
+        return cls(name=name, password_hash=pw_hash, email=email)
+
+    @classmethod
+    def check_login(cls, name, pw):
+        u = cls.by_name(name)
+        if u and valid_pw(name, pw, u.password_hash):
+            return u
+
 
 USER_RE = re.compile(r'^[a-zA-Z0-9_-]{3,20}$')
 PASS_RE = re.compile(r'^.{3,20}$')
 EMAIL_RE = re.compile(r'^[\S]+@[\S]+\.[\S]+$')
-
-DELIM = '|'
-COOKIE_NAME = 'user_id'
 
 
 def valid_username(username):
@@ -127,50 +228,6 @@ def valid_password(password):
 
 def valid_email(email):
     return not email or EMAIL_RE.match(email)
-
-
-def make_salt():
-    return ''.join(random.choice(string.ascii_letters) for x in range(5))
-
-
-def make_pw_hash(name, pw, salt=None):
-    if not salt:
-        salt = make_salt()
-    h = hashlib.sha256(name + pw + salt).hexdigest()
-    return '%s%s%s' % (h, DELIM, salt)
-
-
-def hash_str(s):
-    return hashlib.sha256(str(s)).hexdigest()
-
-
-def make_secure_val(s):
-    return '%s%s%s' % (s, DELIM, hash_str(s))
-
-
-def check_secure_val(h):
-    s, hash_s = h.split(DELIM)
-    if hash_str(s) == hash_s:
-        return s
-
-
-def valid_pw(name, pw, h):
-    salt = h.split(DELIM)[-1]
-    my_h = make_pw_hash(name, pw, salt)
-    return h == my_h
-
-
-def create_user_cookie(response, user_id):
-    cookie_val = make_secure_val(user_id) if user_id else ""
-    response.headers.add_header(
-        'Set-Cookie', '%s=%s; Path=/' % (COOKIE_NAME, cookie_val)
-    )
-
-
-def create_new_user(response, name, password, email):
-    password_hash = make_pw_hash(name, password)
-    user = User(name=name, password_hash=password_hash, email=email)
-    create_user_cookie(response, user.put().id())
 
 
 class SignupHandler(Handler):
@@ -189,9 +246,7 @@ class SignupHandler(Handler):
             params['error_username'] = "That's not a valid username."
             has_error = True
         else:
-            existing_user = db.GqlQuery(
-                "SELECT * FROM User WHERE name = '%s'" % username
-            ).get()
+            existing_user = User.by_name(username)
             if existing_user:
                 params['error_username'] = "This username already exists."
                 has_error = True
@@ -209,9 +264,13 @@ class SignupHandler(Handler):
 
         if has_error:
             self.render('signup.html', **params)
-        else:
-            create_new_user(self.response, username, password, email)
-            self.redirect('/blog/welcome')
+            return
+
+        user = User.register(name=username, pw=password, email=email)
+        user.put()
+
+        self.login(user)
+        self.redirect('/blog/welcome')
 
 
 class LoginHandler(Handler):
@@ -231,7 +290,7 @@ class LoginHandler(Handler):
             self.render_error(username)
             return
 
-        user = User.gql("WHERE name = '%s'" % username).get()
+        user = User.by_name(username)
         if not user:
             self.render_error(username)
             return
@@ -240,27 +299,22 @@ class LoginHandler(Handler):
             self.render_error(username)
             return
 
-        create_user_cookie(self.response, user.key().id())
+        self.login(user)
         self.redirect('/blog/welcome')
 
 
 class LogoutPage(Handler):
     def get(self):
-        create_user_cookie(self.response, None)
+        self.logout()
         self.redirect('/blog/signup')
 
 
 class WelcomePage(Handler):
     def get(self):
-        cookie_val = self.request.cookies.get(COOKIE_NAME)
-        if cookie_val:
-            user_id = check_secure_val(cookie_val)
-            if user_id:
-                user_id = int(user_id)
-                user = User.get_by_id(user_id)
-                self.render('welcome.html', name=user.name)
-                return
-        self.redirect('/blog/signup')
+        if self.user:
+            self.render('welcome.html', name=self.user.name)
+        else:
+            self.redirect('/blog/signup')
 
 
 app = webapp2.WSGIApplication([
@@ -270,5 +324,7 @@ app = webapp2.WSGIApplication([
     (r'/blog/signup/?', SignupHandler),
     (r'/blog/welcome/?', WelcomePage),
     (r'/blog/login/?', LoginHandler),
-    (r'/blog/logout/?', LogoutPage)
+    (r'/blog/logout/?', LogoutPage),
+    (r'/blog/(\d+)/?\.json/?', PostJSON),
+    (r'/blog/?\.json/?', BlogJSON)
 ], debug=True)
