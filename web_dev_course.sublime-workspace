@@ -1,0 +1,664 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Not",
+				"NotImplemented	instance"
+			],
+			[
+				"pass",
+				"password_hash"
+			],
+			[
+				"class",
+				"classmethod	class"
+			],
+			[
+				"request",
+				"RequestHandler"
+			],
+			[
+				"text",
+				"textarea	Tag"
+			],
+			[
+				"specil",
+				"specials_dict	statement"
+			],
+			[
+				"spec",
+				"special_pattern	statement"
+			],
+			[
+				"read",
+				"readlines	function"
+			],
+			[
+				"max_4d",
+				"max_4display_time	param"
+			],
+			[
+				"experim",
+				"experiment_number	param"
+			],
+			[
+				"IN",
+				"IN_4DISPLAY_FILE"
+			],
+			[
+				"output",
+				"output	statement"
+			],
+			[
+				"Dat",
+				"DataFrame	class"
+			],
+			[
+				"RESPO",
+				"RESPONSE_YES	statement"
+			],
+			[
+				"RES",
+				"RESPONSE_YES	statement"
+			],
+			[
+				"OU",
+				"OUT_4DISPLAY_FILE	statement"
+			],
+			[
+				"def",
+				"defs	Method"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "udacity_course/main.py",
+			"settings":
+			{
+				"buffer_size": 8971,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "udacity_course/templates/post.html",
+			"settings":
+			{
+				"buffer_size": 275,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "udacity_course/templates/welcome.html",
+			"settings":
+			{
+				"buffer_size": 134,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "udacity_course/templates/signup.html",
+			"settings":
+			{
+				"buffer_size": 1089,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "udacity_course/static/style.css",
+			"settings":
+			{
+				"buffer_size": 1033,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "udacity_course/templates/login.html",
+			"settings":
+			{
+				"buffer_size": 543,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 287.0,
+		"last_filter": "previ",
+		"selected_items":
+		[
+			[
+				"previ",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"pre",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"fr",
+				"File: Rename"
+			],
+			[
+				"package install",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				":w",
+				":w - Save"
+			],
+			[
+				"package control r",
+				"Package Control: Remove Package"
+			],
+			[
+				"package control",
+				"Package Control: List Packages"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"Snippet: ",
+				"Snippet: Method"
+			],
+			[
+				"git push",
+				"Git: Push"
+			],
+			[
+				"git commit",
+				"Git: Commit"
+			],
+			[
+				"git status",
+				"Git: Status"
+			],
+			[
+				"git add all",
+				"Git: Add All"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"List",
+				"Package Control: List Packages"
+			]
+		],
+		"width": 400.0
+	},
+	"console":
+	{
+		"height": 579.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/ransha/Documents/google_apps",
+		"/home/ransha/Documents/google_apps/udacity_course",
+		"/home/ransha/Documents/google_apps/udacity_course/static",
+		"/home/ransha/Documents/google_apps/udacity_course/templates"
+	],
+	"file_history":
+	[
+		"/home/ransha/Documents/google_apps/udacity_course/templates/new_post.html",
+		"/home/ransha/Documents/google_apps/hw3/templates/signup-form.html",
+		"/home/ransha/Documents/google_apps/hw3/blog.py",
+		"/home/ransha/Documents/google_apps/web_dev_course.sublime-project",
+		"/home/ransha/.config/sublime-text-3/Packages/Anaconda/README.md",
+		"/home/ransha/.config/sublime-text-3/Packages/User/Anaconda.sublime-settings",
+		"/home/ransha/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/ransha/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/ransha/Documents/google_apps/udacity_course/templates/front.html",
+		"/home/ransha/Documents/google_apps/udacity_course/templates/base.html",
+		"/home/ransha/Documents/google_apps/hw3/templates/post.html",
+		"/home/ransha/Documents/google_apps/udacity_course/templates/post.html",
+		"/home/ransha/Documents/google_apps/hw3/templates/permalink.html",
+		"/home/ransha/Documents/google_apps/udacity_course/templates/permalink.html",
+		"/home/ransha/Documents/google_apps/hw3/templates/newpost.html",
+		"/home/ransha/Documents/google_apps/hw3/templates/front.html",
+		"/home/ransha/Documents/google_apps/hw3/templates/base.html",
+		"/home/ransha/Documents/google_apps/udacity_course/static/style.css",
+		"/home/ransha/Documents/google_apps/udacity_course/main.py",
+		"/home/ransha/Documents/google_apps/udacity_course/app.yaml",
+		"/home/ransha/Documents/google_apps/hw3/app.yaml",
+		"/home/ransha/Documents/google_apps/hw3/static/main.css",
+		"/home/ransha/Documents/google_apps/basic_blog/app.yaml",
+		"/home/ransha/Documents/google_apps/basic_blog/stylesheets/style.css",
+		"/home/ransha/Documents/google_apps/basic_blog/templates/base.html",
+		"/home/ransha/Documents/google_apps/basic_blog/templates/post.html",
+		"/home/ransha/Documents/google_apps/basic_blog/templates/new_post.html",
+		"/home/ransha/Documents/google_apps/basic_blog/templates/front.html",
+		"/home/ransha/Documents/google_apps/basic_blog/main.py",
+		"/home/ransha/Documents/google_apps/ascii_chan/main.py",
+		"/home/ransha/Documents/google_apps/basic_blog/index.yaml",
+		"/home/ransha/Documents/google_apps/ascii_chan/app.yaml",
+		"/home/ransha/Documents/google_apps/ascii_chan/templates/front.html",
+		"/home/ransha/Documents/google_apps/ascii_chan/index.yaml",
+		"/home/ransha/Documents/google_apps/jinja_test/templates/shopping_list.html",
+		"/home/ransha/Documents/google_apps/jinja_test/main.py",
+		"/home/ransha/Documents/google_apps/jinja_test/app.yaml",
+		"/home/ransha/Documents/google_apps/jinja_test/index.yaml",
+		"/home/ransha/Documents/google_apps/jinja_test/templates/fizzbuzz.html",
+		"/home/ransha/Documents/google_apps/jinja_test/favicon.ico",
+		"/home/ransha/google_appengine/new_project_template/main.py",
+		"/home/ransha/google_appengine/demos/python/guestbook/guestbook.py",
+		"/home/ransha/google_appengine/hello_udacity/main.py",
+		"/home/ransha/.i3/i3blocks.conf",
+		"/home/ransha/.i3/scripts/updates.sh",
+		"/home/ransha/.i3/scripts/key_l.sh",
+		"/home/ransha/.mozilla/firefox/f60291tu.default/chrome/userChrome.css",
+		"/home/ransha/.Xresources",
+		"/home/ransha/.i3/scripts/lock/lock.sh",
+		"/home/ransha/.xinitrc",
+		"/home/ransha/.config/terminator/config",
+		"/home/ransha/.config/terminator/get_x_colors.sh",
+		"/home/ransha/.i3/config",
+		"/home/ransha/.zshrc",
+		"/home/ransha/.xprofile",
+		"/home/ransha/Downloads/Mullvad/US/mullvad_windows.conf.ovpn",
+		"/home/ransha/.cache/.fr-bgQyl8/mullvad-60/README.rst",
+		"/usr/local/libexec/i3blocks/volume",
+		"/home/ransha/Documents/test/index.html",
+		"/home/ransha/.cache/.fr-WZ8PWa/node-v4.5.0-linux-x64/README.md",
+		"/home/ransha/Dropbox/dotfiles/pc-specific/etc/X11/xorg.conf.d/50-mouse-acceleration.conf",
+		"/home/ransha/safe/labsvm/code/python/data_constants.py",
+		"/home/ransha/safe/labsvm/README.md",
+		"/home/ransha/safe/labsvm/code/python/data_cleanup.py",
+		"/home/ransha/safe/labsvm/.git/info/exclude",
+		"/home/ransha/safe/labsvm/code/python/requirements.txt",
+		"/home/ransha/.ssh/id_rsa.pub",
+		"/home/ransha/safe/labsvm/README",
+		"/home/ransha/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/home/ransha/.config/sublime-text-3/Packages/User/Python.sublime-settings",
+		"/home/ransha/.config/sublime-text-3/Packages/Anaconda/Anaconda.sublime-settings",
+		"/home/ransha/.config/sublime-text-3/Packages/User/sublime_jedi.sublime-settings",
+		"/home/ransha/safe/nand2tetris/projects/12/tmp/Dummy/Main.jack",
+		"/tmp/mozilla_ransha0/complexity-classes.tex",
+		"/home/ransha/.mozilla/firefox/userChrome.css",
+		"/home/ransha/safe/seminar/main.tex",
+		"/home/ransha/safe/labsvm/labsvm.sublime-project",
+		"/home/ransha/safe/labsvm/code/python/Results 4display.ipynb",
+		"/home/ransha/safe/labsvm/code/python/results_cat.py",
+		"/home/ransha/safe/nand2tetris/projects/11/CompilationEngine.py",
+		"/home/ransha/safe/os/ex4/Cache.h",
+		"/home/ransha/safe/os/ex4/CachingFileSystem.cpp",
+		"/home/ransha/.config/sublime-text-3/Packages/User/C++.sublime-settings",
+		"/home/ransha/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap"
+	],
+	"find":
+	{
+		"height": 36.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"create_new_user",
+			"create_user_cookie",
+			"render_post",
+			"hash_str",
+			"border",
+			"EXPERIMENT_NUM",
+			"index",
+			"===",
+			"yes",
+			"auto",
+			"data_dir",
+			"prints",
+			"72",
+			"font",
+			"r",
+			"caret",
+			"cursor",
+			"caret",
+			"day",
+			"th",
+			"Sunday\nMonday\nTuesday\nWednsday\nThursday\nFriday\nSaturday",
+			"Wednsday",
+			"Tuesday",
+			"Sun",
+			"ruler"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "udacity_course/main.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8971,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3568,
+								3568
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2188.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "udacity_course/templates/post.html",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 275,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								176,
+								176
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "udacity_course/templates/welcome.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 134,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								67,
+								67
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "udacity_course/templates/signup.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1089,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1089,
+								1089
+							]
+						],
+						"settings":
+						{
+							"open_with_edit": true,
+							"syntax": "Packages/HTML/HTML.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 366.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "udacity_course/static/style.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1033,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								344,
+								344
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "udacity_course/templates/login.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 543,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								476,
+								476
+							]
+						],
+						"settings":
+						{
+							"open_with_edit": true,
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.git":
+	{
+		"height": 118.0
+	},
+	"pinned_build_system": "",
+	"project": "web_dev_course.sublime-project",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"res",
+				"Results 4display.ipynb"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/.i3/i3-config.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 117.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
