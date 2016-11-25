@@ -64,6 +64,11 @@ input[type=submit] {
     border-bottom: 3px solid #666;
 }
 
+.post-link {
+  color: #444;
+  text-decoration: none;
+}
+
 .post-title {
   font-weight: bold;
   font-size: 24px;
@@ -76,6 +81,13 @@ input[type=submit] {
 .post-date {
   position: absolute;
   right: 0px;
+  bottom: 0px;
+  color: #999;
+}
+
+.query-time {
+  position: absolute;
+  right: 10px;
   bottom: 0px;
   color: #999;
 }

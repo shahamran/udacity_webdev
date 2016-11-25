@@ -11,6 +11,8 @@ import webapp2
 import jinja2
 
 from google.appengine.ext import db
+from google.appengine.api import memcache
+from datetime import datetime, timedelta
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir),
@@ -115,6 +117,52 @@ class Handler(webapp2.RequestHandler):
         self.user = uid and User.by_id(int(uid))
 
 
+# === Memcache wrapper ===
+def age_set(key, val):
+    save_time = datetime.utcnow()
+    memcache.set(key, (val, save_time))
+
+
+def age_get(key):
+    cached_val = memcache.get(key)
+    if cached_val:
+        val, save_time = cached_val
+        age = (datetime.utcnow() - save_time).total_seconds()
+    else:
+        val, age = None, 0
+
+    return val, age
+
+
+class FlushCache(Handler):
+    def get(self):
+        memcache.flush_all()
+        self.redirect('/blog')
+# =========================
+
+
+def top_posts(update=False):
+    key = 'TOP_POSTS'
+    posts, age = age_get(key)
+    if posts is None or update:
+        posts = Post.all().order('-created').fetch(limit=10)
+        posts = list(posts)
+        age_set(key, posts)
+
+    return posts, age
+
+
+def add_post(post):
+    post.put()
+    top_posts(update=True)
+    return str(post.key().id())
+
+
+def age_str(age):
+    age = int(age)
+    return 'queried %d seconds ago' % (age)
+
+
 class BlogFront(Handler):
     """
     A handler for the main page. Displays the front blog page with at most
@@ -122,8 +170,12 @@ class BlogFront(Handler):
     """
 
     def get(self):
-        posts = Post.all().order('-created').fetch(limit=10)
-        self.render("front.html", posts=posts)
+        global query_time
+
+        posts, age = top_posts()
+        self.render("front.html",
+                    posts=posts,
+                    age=age_str(age))
 
 
 class JSONHandler(Handler):
@@ -175,13 +227,23 @@ class NewPost(Handler):
 
 class PostPage(Handler):
     def get(self, post_id):
-        post_id = int(post_id)
-        post = Post.get_by_id(post_id)
+        post_key = 'POST_%s' % post_id
+
+        post, age = age_get(post_key)
+
+        if not post:
+            post_id = int(post_id)
+            post = Post.get_by_id(post_id)
+            age_set(post_key, post)
+            age = 0
+
         if not post:
             self.error(404)
             return
 
-        self.render("permalink.html", post=post)
+        self.render("permalink.html",
+                    post=post,
+                    age=age_str(age))
 
 
 # ===== User accounts =====
@@ -326,5 +388,6 @@ app = webapp2.WSGIApplication([
     (r'/blog/login/?', LoginHandler),
     (r'/blog/logout/?', LogoutPage),
     (r'/blog/(\d+)/?\.json/?', PostJSON),
-    (r'/blog/?\.json/?', BlogJSON)
+    (r'/blog/?\.json/?', BlogJSON),
+    (r'/blog/flush/?', FlushCache)
 ], debug=True)
