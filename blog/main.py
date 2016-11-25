@@ -2,7 +2,14 @@
 import webapp2
 import blog
 
+
+class DefaultPage(webapp2.RequestHandler):
+    def get(self):
+        self.redirect('/blog')
+
+
 app = webapp2.WSGIApplication([
+    (r'/', DefaultPage),
     (r'/blog/?', blog.BlogFront),
     (r'/blog/newpost/?', blog.NewPost),
     (r'/blog/(\d+)/?', blog.PostPage),
