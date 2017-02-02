@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block navright %}
+{% if userName %}
+  <li>{{userName}} <a href="/logout">(logout)</a></li>
+{% else %}
+  <li><a href="/login">Log in</a></li>
+  <li><a href="/signup">Sign up</a></li>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<h1>{{title}}</h1>
+<p>Welcome to wikiMania!</p>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+  <li class="active"><a>Error!</a></li>
+{% endblock %}
+
+{% block navright %}
+{% if userName %}
+  <li>{{userName}} <a href="/logout">(logout)</a></li>
+{% else %}
+  <li><a href="/login">Log in</a></li>
+  <li><a href="/signup">Sign up</a></li>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+  <h1>{{message}}</h1>
+  <h2>{{error.status}}</h2>
+  <pre class="inverse">{{error.stack}}</pre>
+{% endblock %}
